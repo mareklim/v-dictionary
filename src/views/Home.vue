@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <input type="text" v-model="search" />
+  <ul>
+    <li v-for="(word, index) in searchingWords" :key="index">{{ word }}</li>
+  </ul>
+
+  <router-link to="/words/add">Add new words</router-link>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import { computed, reactive, ref } from "vue";
 
 export default {
   name: "Home",
-  components: {
-    HelloWorld
-  }
+  setup() {
+    const search = ref("");
+    const words = reactive(["Ahoj", "Jak", "Se", "Mas"]);
+    const searchingWords = computed(() => {
+      return words.filter(word => word.includes(search.value));
+    });
+    // words.push(newWord);
+
+    console.log(newWord);
+
+    return {
+      words,
+      search,
+      searchingWords,
+    };
+  },
 };
 </script>
